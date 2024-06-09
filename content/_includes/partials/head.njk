@@ -1,0 +1,54 @@
+{% set siteTitle = siteConfig.title %}
+
+{%- set pageTitle -%}
+  {%- if pagination.pageNumber > 0 -%}
+    {{ siteTitle }} | {{ phrases.page }} {{ pagination.pageNumber + 1 }} {{ phrases.of }} {{ pagination.pages|length }} 
+  {%- elif title -%}
+    {{ title | safe }}
+  {%- else -%}
+    {{ siteTitle }}
+  {%- endif -%}
+{%- endset -%}
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{{ pageTitle }}</title>
+<meta name="description" content="{{ siteConfig.description }}">
+<meta property="og:type" content="website">
+<meta property="og:image" content="/apple-touch-icon.png">
+<link rel="stylesheet" href="{{ '/css/style.css' | addHash }}">
+<script src="{{ '/js/scripts.js' | addHash }}"></script>
+<meta name="generator" content="{{ siteConfig.generator.name }} v{{ siteConfig.generator.version }}">
+{%- if canonical -%}
+<link rel="canonical" href="{{ canonical | alwaysProductionUrl }}" />
+{%- endif -%}
+{% favicons 'assets/favicon.svg', appleIconBgColor='#000' %}
+<script>
+if ('serviceWorker' in navigator) {
+{%- if siteConfig.enablePWA -%}
+  navigator.serviceWorker.register('/service-worker.js')
+    .then(registration => {
+      registration.addEventListener('updatefound', () => {
+        const newWorker = registration.installing;
+
+        newWorker.addEventListener('statechange', () => {
+          if (newWorker.state === 'installed') {
+            if (navigator.serviceWorker.controller) {
+              window.location.reload();
+            }
+          }
+        });
+      });
+    })
+    .catch(error => {
+      console.error('Service Worker registration failed:', error);
+    });
+{%- else -%}
+  navigator.serviceWorker.getRegistrations().then(function(registrations) {
+    for(let registration of registrations) {
+        registration.unregister();
+    } 
+  });
+{%- endif -%}
+}
+</script>
