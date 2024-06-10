@@ -22,7 +22,7 @@
 {%- if canonical -%}
 <link rel="canonical" href="{{ canonical | alwaysProductionUrl }}" />
 {%- endif -%}
-{% favicons 'assets/favicon.png', appleIconBgColor='#000' %}
+{% favicons 'assets/favicon.svg', appleIconBgColor='#000' %}
 <script>
 if ('serviceWorker' in navigator) {
 {%- if siteConfig.enablePWA -%}
