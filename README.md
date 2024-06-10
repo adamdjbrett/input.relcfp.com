@@ -1,4 +1,5 @@
-# Input feeds for [Religion Call For Papers (relcfp)](https://relcf.com)
+# Input feeds for [Religion Call For Papers (relcfp)](https://relcfp.com)
+[![Netlify Status](https://api.netlify.com/api/v1/badges/a04604de-f7c5-45c1-a879-90f96150c2c2/deploy-status)](https://app.netlify.com/sites/input-relcfp/deploys)
 * * * 
 
 ## Multiplicity - RSS Aggregator Starter Based On Eleventy
