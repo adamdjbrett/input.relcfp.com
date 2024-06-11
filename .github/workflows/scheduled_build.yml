@@ -10,11 +10,12 @@ jobs:
     steps:
       - name: Data Format Converter Action
         uses: fabasoad/data-format-converter-action@v0.2.3
-        id: xml2yaml
+        id: xml2json
+        token: ${{ secrets.METRICS_TOKEN }}
         with:
           input: "feed.xml"
           from: "xml"
-          to: "yaml"
+          to: "json"
       - name: Deploy site
         uses: lwojcik/github-action-deploy-static-site@v1
         with:
