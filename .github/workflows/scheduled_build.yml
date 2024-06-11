@@ -18,15 +18,11 @@ jobs:
           # platform: netlify
           # netlify_deploy_hook_url: ${{ secrets.NETLIFY_DEPLOY_HOOK_URL }}
           # always_deploy: true
-    # Steps represent a sequence of tasks that will be executed as part of the job
-    steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - name: Create Firehose
         uses: actions/checkout@main
         with:
         repository: adamdjbrett/input.relcfp.com
         token: ${{ secrets.RELCFPCHRONJOB }}
-
       - name: Make executeable
         run: chmod +x ./get_rss.sh
       # Runs a single command using the runners shell
