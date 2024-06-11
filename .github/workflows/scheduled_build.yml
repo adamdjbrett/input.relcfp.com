@@ -18,17 +18,3 @@ jobs:
           # platform: netlify
           # netlify_deploy_hook_url: ${{ secrets.NETLIFY_DEPLOY_HOOK_URL }}
           # always_deploy: true
-      - name: Create Firehose
-        uses: actions/checkout@main
-        with:
-        repository: adamdjbrett/input.relcfp.com
-        token: ${{ secrets.RELCFPCHRONJOB }}
-      - name: Make executeable
-        run: chmod +x ./get_rss.sh
-      # Runs a single command using the runners shell
-      - name: Get RSS
-        run: ./get_rss.sh
-      - name: Add & Commit
-        uses: EndBug/add-and-commit@main
-        with:
-          add: firehose.xml
