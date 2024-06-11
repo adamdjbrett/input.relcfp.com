@@ -24,11 +24,3 @@ jobs:
         with:
           app-id: ${{ vars.APP_ID }}
           private-key: ${{ secrets.MY_GITHUB_TOKEN}}
-      - name: Data Format Converter Action    
-        uses: fabasoad/data-format-converter-action@v0.2.3
-        id: xml2yaml
-        with:
-          input: "https://input.relcfp.com/feed.xml"
-          from: "xml"
-          to: "yaml"
-          token: ${{ secrets.MY_GITHUB_TOKEN }}
