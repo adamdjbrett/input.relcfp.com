@@ -18,12 +18,6 @@ jobs:
           # platform: netlify
           # netlify_deploy_hook_url: ${{ secrets.NETLIFY_DEPLOY_HOOK_URL }}
           # always_deploy: true
-      - name: Github App
-        uses: actions/create-github-app-token@main
-        id: generate-app-token
-        with:
-          app-id: ${{ vars.APP_ID }}
-          private-key: ${{ secrets.RELCFP_DATA_FORMAT_CONV_ACTION }}
       - name: Data Format Converter Action    
         uses: fabasoad/data-format-converter-action@v0.2.3
         id: xml2yaml
@@ -31,4 +25,4 @@ jobs:
           input: "https://input.relcfp.com/feed.xml"
           from: "xml"
           to: "yaml"
-          token: ${{ secrets.MY_GITHUB_TOKEN }}
+          token: ${{ secrets.MY_RELCFP_TOKEN }}
