@@ -8,6 +8,13 @@ jobs:
   DeploySite:
     runs-on: ubuntu-latest
     steps:
+      - name: Data Format Converter Action
+        uses: fabasoad/data-format-converter-action@v0.2.3
+        id: xml2yaml
+        with:
+          input: "feed.xml"
+          from: "xml"
+          to: "yaml"
       - name: Deploy site
         uses: lwojcik/github-action-deploy-static-site@v1
         with:
