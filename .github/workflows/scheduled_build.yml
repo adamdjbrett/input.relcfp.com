@@ -8,14 +8,6 @@ jobs:
   DeploySite:
     runs-on: ubuntu-latest
     steps:
-      - name: Data Format Converter Action
-        uses: fabasoad/data-format-converter-action@v0.2.3
-        id: xml2json
-        token: ${{ secrets.METRICS_TOKEN }}
-        with:
-          input: "content/utils/feed.xml.njk"
-          from: "xml"
-          to: "json"
       - name: Deploy site
         uses: lwojcik/github-action-deploy-static-site@v1
         with:
@@ -26,3 +18,16 @@ jobs:
           # platform: netlify
           # netlify_deploy_hook_url: ${{ secrets.NETLIFY_DEPLOY_HOOK_URL }}
           # always_deploy: true
+      - name: Data Format Converter Action
+        uses: actions/create-github-app-token@v1
+        id: generate-app-token
+        with:
+          app-id: ${{ vars.APP_ID }}
+          private-key: ${{ secrets.MY_GITHUB_TOKEN}}
+        uses: fabasoad/data-format-converter-action@v0.2.3
+        id: xml2json
+         with:
+          input: "https://input.relcfp.com/feed.xml"
+          from: "xml"
+          to: "json"
+          token: ${{ secrets.MY_GITHUB_TOKEN }}
