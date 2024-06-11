@@ -27,7 +27,7 @@ jobs:
       - name: Data Format Converter Action    
         uses: fabasoad/data-format-converter-action@v0.2.3
         id: xml2yaml
-         with:
+        with:
           input: "https://input.relcfp.com/feed.xml"
           from: "xml"
           to: "yaml"
