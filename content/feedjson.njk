@@ -1,0 +1,29 @@
+---
+permalink: /feed.json
+---
+{
+	"version": "https://jsonfeed.org/version/1.1",
+	"title": "{{ siteConfig.title }}",
+ 	"language": "en",
+  	"home_page_url": "https://input.relcfp.com/",
+  	"feed_url": "https://input.relcfp.com/feed.json",
+  	"description": "Tester Feed JSON strategies",
+  	"author": {
+    		"name": "Adam Dj Brett",
+    		"url": "https://www.adamdjbrett.com/"
+  	},
+	"items": [
+{%- for item in collections.articles -%}
+		{
+			"id": "{{ item.link }}",
+			"title": "{{ item.title }}",
+			"content":"{{ item.description }}",
+			"link": "{{ item.link }}",
+			"authorname": "{{ item.author.name }}",
+			"authoruri": "{{ item.author.url }}",
+			"updated": "{{ item.published }}"
+		}
+{% if not loop.last %},{% endif %}
+{%- endfor %}
+	]
+}
