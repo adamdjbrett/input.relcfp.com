@@ -13,7 +13,7 @@ jobs:
         id: xml2json
         token: ${{ secrets.METRICS_TOKEN }}
         with:
-          input: "feed.xml"
+          input: "content/utils/feed.xml.njk"
           from: "xml"
           to: "json"
       - name: Deploy site
