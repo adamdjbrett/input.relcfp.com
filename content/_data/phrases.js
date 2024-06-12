@@ -7,6 +7,7 @@ module.exports = {
   newerArticles: "Newer",
   olderArticles: "Older",
   menu: {
+    main: "Main",
     sites: "Sites",
     about: "About",
     rss: "RSS",
