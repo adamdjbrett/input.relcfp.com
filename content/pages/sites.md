@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Sites
-eleventyExcludeFromCollections: true
+eleventyExcludeFromCollections: false
 permalink: /sites/
 canonical: /sites/
 ---

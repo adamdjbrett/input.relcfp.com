@@ -1,7 +1,7 @@
 ---
 layout: page
 title: About
-eleventyExcludeFromCollections: true
+eleventyExcludeFromCollections: false
 permalink: /about/
 canonical: /about/
 ---
