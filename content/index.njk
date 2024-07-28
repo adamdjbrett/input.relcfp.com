@@ -1,9 +1,9 @@
 ---
 layout: base
-eleventyExcludeFromCollections: false
+eleventyExcludeFromCollections: true
 pagination:
   data: collections.articles
-  size: 10
+  size: 25
   alias: items
 permalink: "{% if pagination.pageNumber > 0 %}/page/{{ pagination.pageNumber + 1 }}{% endif %}/"
 canonical: /
