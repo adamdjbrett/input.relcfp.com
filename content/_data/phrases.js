@@ -3,9 +3,11 @@ module.exports = {
   page: "page",
   of: "of",
   rssFeed: "RSS Feed",
+  jsonFeed: "JSON Feed",
   sAvatar: "'s avatar",
   newerArticles: "Newer",
   olderArticles: "Older",
+  opmlFileTitle: "All feeds",
   menu: {
     main: "Main",
     sites: "Sites",
