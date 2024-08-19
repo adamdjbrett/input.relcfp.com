@@ -5,4 +5,4 @@ eleventyExcludeFromCollections: false
 permalink: /sites/
 canonical: /sites/
 ---
-{% include "partials/bloglist.njk" %}
+{% include "partials/sitelist.njk" %}
