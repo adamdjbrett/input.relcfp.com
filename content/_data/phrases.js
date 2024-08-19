@@ -9,10 +9,11 @@ module.exports = {
   olderArticles: "Older",
   opmlFileTitle: "All feeds",
   menu: {
+    main: "Main",
     sites: "Sites",
     about: "About",
     rss: "RSS",
-    toggleTheme: "Toggle theme",
+    toggleTheme: "☀︎/☾",
   },
   skip_to_main_content: "Skip to main content",
 };
