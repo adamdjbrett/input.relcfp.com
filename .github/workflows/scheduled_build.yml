@@ -7,6 +7,10 @@ on:
 permissions:
   contents: write
 
+concurrency:
+  group: update-site-main
+  cancel-in-progress: false
+
 jobs:
   DeploySite:
     runs-on: ubuntu-latest
@@ -32,11 +36,12 @@ jobs:
         if: success()
         run: |
           stamp="$(date -u +'%Y-%m-%d-%H-%M-%S')"
-          echo "update completed ${stamp}" >> README.md
+          echo "- update completed ${stamp}" >> README.md
 
       - name: Commit and push README update
         if: success()
         run: |
+          set -euo pipefail
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add README.md
@@ -45,4 +50,14 @@ jobs:
             exit 0
           fi
           git commit -m "chore: log successful workflow run ${GITHUB_RUN_ID}"
-          git push
+          branch="${GITHUB_REF_NAME:-main}"
+          for attempt in 1 2 3; do
+            git pull --rebase origin "${branch}"
+            if git push origin "HEAD:${branch}"; then
+              exit 0
+            fi
+            echo "Push rejected on attempt ${attempt}. Retrying..."
+            sleep $((attempt * 2))
+          done
+          echo "Failed to push README update after 3 attempts."
+          exit 1
