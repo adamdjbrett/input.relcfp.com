@@ -60,6 +60,13 @@ See [`phrases.js`](./content/_data/phrases.js) for the list of translatable stat
 
 The aggregator uses [eleventy-fetch](https://www.11ty.dev/docs/plugins/fetch/) plugin for fetching and caching network requests. If you use Netlify, you can limit number of network requests with Netlify cache mechanism - [see Eleventy docs on how to enable it](https://www.11ty.dev/docs/plugins/fetch/#running-this-on-your-build-server).
 
+### Feed endpoints
+
+- Primary public feed: `https://input.relcfp.com/feed.xml`
+- Server-to-server fallback feed: `https://input-relcfp.netlify.app/feed.xml`
+
+The Netlify default-domain feed is kept as a stable machine-readable fallback in case the custom domain edge returns `403` to automated clients such as GitHub Actions.
+
 ### Contributions
 
 Contributions of the following kind are welcome:
