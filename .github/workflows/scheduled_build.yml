@@ -2,10 +2,10 @@ name: Update site
 on:
   workflow_dispatch:
   schedule:
-    - cron: "0 6,16 * * *" # Every day at 6am. Modify this as you see fit
+    - cron: "0 6,16 * * *" # Daily at 06:00 and 16:00 UTC
 
 permissions:
-  contents: write
+  contents: read
 
 concurrency:
   group: update-site-main
@@ -15,49 +15,48 @@ jobs:
   DeploySite:
     runs-on: ubuntu-latest
     steps:
-      - name: Deploy site
-        uses: lwojcik/github-action-deploy-static-site@v1
-        with:
-          platform: netlify
-          netlify_deploy_hook_url: ${{ secrets.NETLIFY_DEPLOY_HOOK_URL }}
-          always_deploy: true
-          # Using Netlify? Configure this action as follows:
-          # platform: netlify
-          # netlify_deploy_hook_url: ${{ secrets.NETLIFY_DEPLOY_HOOK_URL }}
-          # always_deploy: true
-
-      - name: Checkout repository
-        if: success()
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-
-      - name: Log successful update in README
-        if: success()
-        run: |
-          stamp="$(date -u +'%Y-%m-%d-%H-%M-%S')"
-          echo "- update completed ${stamp}" >> README.md
-
-      - name: Commit and push README update
-        if: success()
+      - name: Trigger Netlify deploy
+        env:
+          NETLIFY_DEPLOY_HOOK_URL: ${{ secrets.NETLIFY_DEPLOY_HOOK_URL }}
         run: |
           set -euo pipefail
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add README.md
-          if git diff --cached --quiet; then
-            echo "No README changes to commit."
-            exit 0
+          if [ -z "${NETLIFY_DEPLOY_HOOK_URL:-}" ]; then
+            echo "::error::Missing NETLIFY_DEPLOY_HOOK_URL secret."
+            exit 1
           fi
-          git commit -m "chore: log successful workflow run ${GITHUB_RUN_ID}"
-          branch="${GITHUB_REF_NAME:-main}"
-          for attempt in 1 2 3; do
-            git pull --rebase origin "${branch}"
-            if git push origin "HEAD:${branch}"; then
-              exit 0
+
+          echo "Triggering Netlify deploy for input.relcfp.com..."
+          http_code="$(curl --silent --show-error --location \
+            --output /tmp/netlify-deploy-response.txt \
+            --write-out "%{http_code}" \
+            --request POST \
+            --header "Content-Type: application/json" \
+            --data '{}' \
+            "${NETLIFY_DEPLOY_HOOK_URL}")"
+
+          echo "Netlify deploy hook responded with HTTP ${http_code}."
+          if [ "${http_code}" -lt 200 ] || [ "${http_code}" -ge 300 ]; then
+            echo "::error::Netlify deploy hook failed with HTTP ${http_code}."
+            if [ -s /tmp/netlify-deploy-response.txt ]; then
+              echo "Response body:"
+              cat /tmp/netlify-deploy-response.txt
             fi
-            echo "Push rejected on attempt ${attempt}. Retrying..."
-            sleep $((attempt * 2))
-          done
-          echo "Failed to push README update after 3 attempts."
-          exit 1
+            exit 1
+          fi
+
+          echo "::notice::Netlify deploy hook accepted the deployment request."
+          if [ -s /tmp/netlify-deploy-response.txt ]; then
+            echo "Response body:"
+            cat /tmp/netlify-deploy-response.txt
+          fi
+
+      - name: Write deploy summary
+        if: success()
+        run: |
+          {
+            echo "### Deploy queued"
+            echo ""
+            echo "- Repository: \`adamdjbrett/input.relcfp.com\`"
+            echo "- Triggered: \`$(date -u +'%Y-%m-%dT%H:%M:%SZ')\`"
+            echo "- Result: Netlify deploy hook accepted the request."
+          } >> "$GITHUB_STEP_SUMMARY"
