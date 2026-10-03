@@ -6,8 +6,8 @@ module.exports = async () => {
   const jsonFeeds = await fetchJsonFeeds();
 
   const allFeeds = [...rssFeeds, ...jsonFeeds]
-    .sort((a, b) => a.name.localeCompare(b.name))
-    .filter((item) => item);
+    .filter((item) => item)
+    .sort((a, b) => a.name.localeCompare(b.name));
 
   return allFeeds;
 };
