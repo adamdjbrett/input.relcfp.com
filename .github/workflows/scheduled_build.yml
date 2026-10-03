@@ -2,7 +2,7 @@ name: Update site
 on:
   workflow_dispatch:
   schedule:
-    - cron: "0 6,16 * * *" # Daily at 06:00 and 16:00 UTC
+    - cron: "17 6,16 * * *" # 06:17 and 16:17 UTC; off the hour, :00 runs get delayed for hours
 
 permissions:
   contents: read

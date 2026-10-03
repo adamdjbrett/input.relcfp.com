@@ -3,6 +3,7 @@ const packageJson = require("../../package.json");
 module.exports = {
   title: "Input 4 RELCFP",
   description: "the input feeds used for religion call for papers",
+  language: "en",
   author: "Multiple Authors",
   url: "https://input.relcfp.com",
   github: {

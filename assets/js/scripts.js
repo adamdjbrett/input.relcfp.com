@@ -74,7 +74,7 @@ window.addEventListener("DOMContentLoaded", () => {
   // Menu
 
   var menu = document.getElementById("menu"),
-    rollback,
+    rollBack,
     WINDOW_CHANGE_EVENT =
       "onorientationchange" in window ? "orientationchange" : "resize";
 

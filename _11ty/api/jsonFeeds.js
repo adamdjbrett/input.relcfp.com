@@ -37,8 +37,9 @@ module.exports = async () => {
         articles,
       };
     } catch (error) {
-      logger.error(`[${site.file}] Error processing JSON feed: ${site.feed}`);
-      console.error(error);
+      logger.error(
+        `[${site.file}] Error processing JSON feed: ${site.feed} (${error.cause?.cause?.message || error.message})`
+      );
     }
   });
 

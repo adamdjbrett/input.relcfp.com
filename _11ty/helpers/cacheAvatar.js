@@ -75,8 +75,9 @@ module.exports = async ({ url, name }) => {
       url: path.join("/", AVATAR_DIR, fileName),
     }
   } catch (error) {
-    logger.error(`[${name}] Error fetching avatar - default will be used`);
-    console.log(error);
+    logger.error(
+      `[${name}] Error fetching avatar - default will be used (${error.message})`
+    );
 
     return {
       name,

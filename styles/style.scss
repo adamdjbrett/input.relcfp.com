@@ -1,5 +1,5 @@
-@import "vendors/all";
-@import "partials/all";
+@use "vendors/all" as vendors;
+@use "partials/all" as partials;
 
 .container {
   max-width: 48rem;

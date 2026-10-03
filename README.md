@@ -49,7 +49,7 @@ Render:
       - `hideFromSiteList` - set it to `true` if you want to hide this site from the list of sites on the Sites page. It is useful if you want to add two sites with different RSS feeds under the same name and avoid seeing duplicates on the list
 4. Deploy the site to Netlify or Vercel
 5. Set up the GitHub action in [`.github/workflows/scheduled_build.yml`](./.github/workflows/scheduled_build.yml):
-   1. Create a build hook URL and save it as a GitHub secret in your repository - e.g. `NETLIFY_BUILD_HOOK_URL` or `VERCEL_BUILD_HOOK_URL`
+   1. Create a build hook URL and save it as a GitHub secret in your repository - e.g. `NETLIFY_DEPLOY_HOOK_URL`
 6. Done! Your aggregator is up and running.
 
 ### Translation file

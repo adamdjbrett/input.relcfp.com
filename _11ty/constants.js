@@ -14,6 +14,7 @@ module.exports = {
     "feedType",
     "hideFromSiteList",
     "disable",
+    "pageDates",
   ],
   WARNING_PREFIX: "warning",
   ERROR_PREFIX: "ERROR",

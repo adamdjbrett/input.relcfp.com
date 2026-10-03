@@ -1,5 +1,4 @@
 const faviconsPlugin = require("eleventy-plugin-gen-favicons");
-const pluginRss = require("@11ty/eleventy-plugin-rss");
 const addHash = require("./_11ty/helpers/addHash");
 const readableDate = require("./_11ty/helpers/readableDate");
 const minifyHTML = require("./_11ty/helpers/minifyHTML");
@@ -47,12 +46,16 @@ module.exports = function (eleventyConfig) {
     },
   });
 
-  eleventyConfig.addPlugin(pluginRss);
-
   // --- Transforms
 
-  eleventyConfig.addTransform("minifyHTML", minifyHTML);
-  eleventyConfig.addTransform("minifyXML", minifyXML);
+  // Skip minification on the dev server: faster, readable rebuilds
+  if (process.env.ELEVENTY_RUN_MODE !== "serve") {
+    eleventyConfig.addTransform("minifyHTML", minifyHTML);
+    eleventyConfig.addTransform("minifyXML", minifyXML);
+  }
+
+  // --- Dev server: sass writes straight to _site/css, so reload on it
+  eleventyConfig.setServerOptions({ watch: ["_site/css/**/*.css"] });
 
   return {
     dir: {
